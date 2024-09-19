@@ -6,7 +6,6 @@ import re
 def process_file(input_file):
     output_file = os.path.splitext(input_file)[0] + '.ics'
 
-    # Extract year and month from filename
     filename = os.path.basename(input_file)
     year = filename[:4]
     month = filename[4:6]
@@ -41,16 +40,13 @@ def process_file(input_file):
                 end_time += timedelta(minutes=15)
                 end_time_formatted = end_time.strftime("%H%M%S")
 
-                summary = name if name == "Sunrise" else f"{name} Prayer"
-                description = name if name == "Sunrise" else f"{name} Prayer Time"
-            
                 ics_content += f"""BEGIN:VEVENT
-            DTSTART:{year}{month}{day}T{start_time}
-            DTEND:{year}{month}{day}T{end_time_formatted}
-            SUMMARY:{summary}
-            DESCRIPTION:{description}
-            END:VEVENT
-            """
+DTSTART:{year}{month}{day}T{start_time}
+DTEND:{year}{month}{day}T{end_time_formatted}
+SUMMARY:{name}
+DESCRIPTION:{name}
+END:VEVENT
+"""
 
     ics_content += "END:VCALENDAR\n"
     with open(output_file, 'w') as f:
@@ -69,10 +65,13 @@ for file in sys.argv[1:]:
 
 answer = input("Do you want to concatenate all ICS files into a single file? (y/n) ")
 if answer.lower() == 'y':
-    all_ics_content = ''
+    all_ics_content = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Prayer Times//EN\n"
     for ics_file in [f for f in os.listdir() if f.endswith('.ics')]:
         with open(ics_file, 'r') as f:
-            all_ics_content += f.read()
+            content = f.read()
+            events = re.findall(r'BEGIN:VEVENT.*?END:VEVENT', content, re.DOTALL)
+            all_ics_content += '\n'.join(events) + '\n'
+    all_ics_content += "END:VCALENDAR\n"
     with open("all_prayer_times.ics", 'w') as f:
         f.write(all_ics_content)
     print("All ICS files concatenated into all_prayer_times.ics")
