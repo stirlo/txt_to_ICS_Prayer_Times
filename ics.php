@@ -29,6 +29,7 @@ function process_file($input_file) {
             "Night" => $night
         ];
 
+
         foreach ($prayers as $name => $time) {
             list($hour, $minute) = explode(':', $time);
             $start_time = sprintf("%02d%02d00", $hour, $minute);
@@ -37,11 +38,14 @@ function process_file($input_file) {
             $end_time->add(new DateInterval('PT15M'));
             $end_time_formatted = $end_time->format('His');
 
+            $summary = ($name == 'Sunrise') ? $name : "$name Prayer";
+            $description = ($name == 'Sunrise') ? $name : "$name Prayer Time";
+        
             $ics_content .= "BEGIN:VEVENT\n";
             $ics_content .= "DTSTART:{$year}{$month}{$day}T{$start_time}\n";
             $ics_content .= "DTEND:{$year}{$month}{$day}T{$end_time_formatted}\n";
-            $ics_content .= "SUMMARY:$name Prayer\n";
-            $ics_content .= "DESCRIPTION:$name Prayer Time\n";
+            $ics_content .= "SUMMARY:$summary\n";
+            $ics_content .= "DESCRIPTION:$description\n";
             $ics_content .= "END:VEVENT\n";
         }
     }
