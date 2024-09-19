@@ -36,6 +36,7 @@ PRODID:-//Prayer Times//EN
             "Night" = $night
         }
 
+        
         foreach ($prayer in $prayers.GetEnumerator()) {
             $name = $prayer.Key
             $time = $prayer.Value
@@ -46,15 +47,18 @@ PRODID:-//Prayer Times//EN
             $endTime = [DateTime]::ParseExact("$year-$month-$day $time", "yyyy-MM-dd HH:mm", $null).AddMinutes(15)
             $endTimeFormatted = $endTime.ToString("HHmmss")
 
+            $summary = if ($name -eq 'Sunrise') { $name } else { "$name Prayer" }
+            $description = if ($name -eq 'Sunrise') { $name } else { "$name Prayer Time" }
+        
             $icsContent += @"
-BEGIN:VEVENT
-DTSTART:$year$month$day`T$startTime
-DTEND:$year$month$day`T$endTimeFormatted
-SUMMARY:$name Prayer
-DESCRIPTION:$name Prayer Time
-END:VEVENT
-
-"@
+        BEGIN:VEVENT
+        DTSTART:$year$month$day`T$startTime
+        DTEND:$year$month$day`T$endTimeFormatted
+        SUMMARY:$summary
+        DESCRIPTION:$description
+        END:VEVENT
+        
+        "@
         }
     }
 
