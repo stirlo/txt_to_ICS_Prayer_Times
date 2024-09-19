@@ -33,7 +33,8 @@ PRODID:-//Prayer Times//EN" > "$output_file"
 
         # Generate events for each prayer time
         for prayer in "Dawn:$dawn" "Sunrise:$sunrise" "Midday:$midday" "Afternoon:$afternoon" "Sunset:$sunset" "Night:$night"; do
-            IFS=':' read -r name time <<< "$prayer"  # Split prayer name and time
+        IFS=':' read -r name time <<< "$prayer"  # Split prayer name and time
+
 
             # Convert time to hours and minutes
             IFS=':' read -r hour minute <<< "$time"
@@ -54,10 +55,10 @@ PRODID:-//Prayer Times//EN" > "$output_file"
             echo "BEGIN:VEVENT
 DTSTART:${year}${month}${day}T${start_time}
 DTEND:${year}${month}${day}T${end_time}
-SUMMARY:$name Prayer
-DESCRIPTION:$name Prayer Time
+SUMMARY:${name}${name == 'Sunrise' ? '' : ' Prayer'}
+DESCRIPTION:${name}${name == 'Sunrise' ? '' : ' Prayer Time'}
 END:VEVENT" >> "$output_file"
-        done
+done
     done < "$input_file"
 
     # End the ICS file
