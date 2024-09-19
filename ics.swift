@@ -47,14 +47,17 @@ func processFile(_ inputFile: String) {
                 let endDate = date.addingTimeInterval(15 * 60)
                 let endTime = String(format: "%02d%02d00", Calendar.current.component(.hour, from: endDate), Calendar.current.component(.minute, from: endDate))
 
+                let summary = name == "Sunrise" ? name : "\(name) Prayer"
+                let description = name == "Sunrise" ? name : "\(name) Prayer Time"
+            
                 icsContent += """
                 BEGIN:VEVENT
                 DTSTART:\(year)\(month)\(paddedDay)T\(startTime)
                 DTEND:\(year)\(month)\(paddedDay)T\(endTime)
-                SUMMARY:\(name) Prayer
-                DESCRIPTION:\(name) Prayer Time
+                SUMMARY:\(summary)
+                DESCRIPTION:\(description)
                 END:VEVENT
-
+            
                 """
             }
         }
