@@ -3,7 +3,6 @@
 function process_file($input_file) {
     $output_file = pathinfo($input_file, PATHINFO_FILENAME) . '.ics';
 
-    // Extract year and month from filename
     $filename = basename($input_file);
     $year = substr($filename, 0, 4);
     $month = substr($filename, 4, 2);
@@ -29,7 +28,6 @@ function process_file($input_file) {
             "Night" => $night
         ];
 
-
         foreach ($prayers as $name => $time) {
             list($hour, $minute) = explode(':', $time);
             $start_time = sprintf("%02d%02d00", $hour, $minute);
@@ -38,14 +36,11 @@ function process_file($input_file) {
             $end_time->add(new DateInterval('PT15M'));
             $end_time_formatted = $end_time->format('His');
 
-            $summary = ($name == 'Sunrise') ? $name : "$name Prayer";
-            $description = ($name == 'Sunrise') ? $name : "$name Prayer Time";
-        
             $ics_content .= "BEGIN:VEVENT\n";
             $ics_content .= "DTSTART:{$year}{$month}{$day}T{$start_time}\n";
             $ics_content .= "DTEND:{$year}{$month}{$day}T{$end_time_formatted}\n";
-            $ics_content .= "SUMMARY:$summary\n";
-            $ics_content .= "DESCRIPTION:$description\n";
+            $ics_content .= "SUMMARY:$name\n";
+            $ics_content .= "DESCRIPTION:$name\n";
             $ics_content .= "END:VEVENT\n";
         }
     }
@@ -72,10 +67,13 @@ for ($i = 1; $i < $argc; $i++) {
 echo "Do you want to concatenate all ICS files into a single file? (y/n) ";
 $answer = trim(fgets(STDIN));
 if (strtolower($answer) === 'y') {
-    $all_ics_content = '';
+    $all_ics_content = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Prayer Times//EN\n";
     foreach (glob("*.ics") as $ics_file) {
-        $all_ics_content .= file_get_contents($ics_file);
+        $content = file_get_contents($ics_file);
+        preg_match_all('/BEGIN:VEVENT.*?END:VEVENT/s', $content, $matches);
+        $all_ics_content .= implode("\n", $matches[0]) . "\n";
     }
+    $all_ics_content .= "END:VCALENDAR\n";
     file_put_contents("all_prayer_times.ics", $all_ics_content);
     echo "All ICS files concatenated into all_prayer_times.ics\n";
 }
