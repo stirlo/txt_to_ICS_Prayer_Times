@@ -3,7 +3,6 @@ import Foundation
 func processFile(_ inputFile: String) {
     let outputFile = (inputFile as NSString).deletingPathExtension + ".ics"
 
-    // Extract year and month from filename
     let filename = (inputFile as NSString).lastPathComponent
     let year = String(filename.prefix(4))
     let month = String(filename.dropFirst(4).prefix(2))
@@ -47,17 +46,14 @@ func processFile(_ inputFile: String) {
                 let endDate = date.addingTimeInterval(15 * 60)
                 let endTime = String(format: "%02d%02d00", Calendar.current.component(.hour, from: endDate), Calendar.current.component(.minute, from: endDate))
 
-                let summary = name == "Sunrise" ? name : "\(name) Prayer"
-                let description = name == "Sunrise" ? name : "\(name) Prayer Time"
-            
                 icsContent += """
                 BEGIN:VEVENT
                 DTSTART:\(year)\(month)\(paddedDay)T\(startTime)
                 DTEND:\(year)\(month)\(paddedDay)T\(endTime)
-                SUMMARY:\(summary)
-                DESCRIPTION:\(description)
+                SUMMARY:\(name)
+                DESCRIPTION:\(name)
                 END:VEVENT
-            
+
                 """
             }
         }
@@ -92,15 +88,22 @@ for file in arguments.dropFirst() {
 
 print("Do you want to concatenate all ICS files into a single file? (y/n) ")
 if let answer = readLine()?.lowercased(), answer == "y" {
-    var allIcsContent = ""
+    var allIcsContent = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Prayer Times//EN\n"
     let fileManager = FileManager.default
     do {
         let icsFiles = try fileManager.contentsOfDirectory(atPath: ".").filter { $0.hasSuffix(".ics") }
         for icsFile in icsFiles {
             if let content = try? String(contentsOfFile: icsFile) {
-                allIcsContent += content
+                let eventRegex = try NSRegularExpression(pattern: "BEGIN:VEVENT.*?END:VEVENT", options: [.dotMatchesLineSeparators])
+                let matches = eventRegex.matches(in: content, options: [], range: NSRange(content.startIndex..., in: content))
+                for match in matches {
+                    if let range = Range(match.range, in: content) {
+                        allIcsContent += content[range] + "\n"
+                    }
+                }
             }
         }
+        allIcsContent += "END:VCALENDAR\n"
         try allIcsContent.write(toFile: "all_prayer_times.ics", atomically: true, encoding: .utf8)
         print("All ICS files concatenated into all_prayer_times.ics")
     } catch {
