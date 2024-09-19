@@ -41,13 +41,16 @@ def process_file(input_file):
                 end_time += timedelta(minutes=15)
                 end_time_formatted = end_time.strftime("%H%M%S")
 
+                summary = name if name == "Sunrise" else f"{name} Prayer"
+                description = name if name == "Sunrise" else f"{name} Prayer Time"
+            
                 ics_content += f"""BEGIN:VEVENT
-DTSTART:{year}{month}{day}T{start_time}
-DTEND:{year}{month}{day}T{end_time_formatted}
-SUMMARY:{name} Prayer
-DESCRIPTION:{name} Prayer Time
-END:VEVENT
-"""
+            DTSTART:{year}{month}{day}T{start_time}
+            DTEND:{year}{month}{day}T{end_time_formatted}
+            SUMMARY:{summary}
+            DESCRIPTION:{description}
+            END:VEVENT
+            """
 
     ics_content += "END:VCALENDAR\n"
     with open(output_file, 'w') as f:
