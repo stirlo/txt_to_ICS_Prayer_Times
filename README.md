@@ -59,8 +59,8 @@ Contributions, issues, and feature requests are welcome. Feel free to check [iss
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/) (or your chosen license)
+[MIT](https://choosealicense.com/licenses/mit/) 
 
 ## Author
 
-Your Name (or GitHub username)
+Stirling Campbell
