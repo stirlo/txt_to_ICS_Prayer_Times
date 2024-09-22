@@ -1,56 +1,33 @@
-# Plaintext to ICS Converter
+## Plaintext to ICS Converter
 
-This project provides tools to convert plaintext prayer time data into iCalendar (ICS) format, making it easy to import prayer schedules into various calendar applications. It now includes implementations in Bash, PowerShell, Python, Swift, and a web-based converter.
+This project converts plaintext prayer time data into iCalendar (ICS) format for easy calendar import. It supports multiple languages, including English, and has implementations in Bash, PowerShell, Python, Swift, and a web-based converter.
 
 ## Features
 
 - Processes prayer time data for multiple months and years
-- Generates ICS files with 15-minute duration for each prayer event
-- Supports batch processing of multiple input files
-- Option to concatenate all generated ICS files into a single file
-- Uses English terms for prayer times (Dawn, Sunrise, Midday, Afternoon, Sunset, Night)
-- Multiple implementation options: Bash, PowerShell, Python, Swift, and Web
+- Generates ICS files with 15-minute duration for each event
+- Supports batch processing and concatenating generated ICS files
+- Uses English terms for prayer times
 
 ## Implementations
 
-### Bash Script
+- Bash script (`create_ics.sh`) runs on Unix-like operating systems
+- PowerShell script (`Create-ICS.ps1`) runs on Windows, macOS, and Linux with PowerShell
+- Python script (`create_ics.py`) requires Python 3.x
+- Swift script (`CreateICS.swift`) requires Swift and works on macOS, Linux, and Windows
+- Web-based converter (`index.html`, `styles.css`, etc.) runs in web browsers
 
-- Located in `create_ics.sh`
-- Runs on most Unix-like operating systems, including Linux and macOS
+## To use the web-based converter:
 
-### PowerShell Script
-
-- Located in `Create-ICS.ps1`
-- Runs on Windows, macOS, and Linux with PowerShell installed
-
-### Python Script
-
-- Located in `create_ics.py`
-- Requires Python 3.x
-
-### Swift Script
-
-- Located in `CreateICS.swift`
-- Requires Swift compiler (works on macOS, Linux, and Windows with Swift installed)
-
-### Web-based Converter
-
-- Located in `index.html`, `styles.css`, and related files
-- Runs in web browsers, no server-side processing required
-- Accessible online at: [https://stirlo.github.io/txt_to_ICS_Prayer_Times/](https://stirlo.github.io/txt_to_ICS_Prayer_Times/)
-
-To use the web-based converter:
-1. Visit [https://stirlo.github.io/txt_to_ICS_Prayer_Times/](https://stirlo.github.io/txt_to_ICS_Prayer_Times/) in your web browser
-2. Upload text files using the file input
-3. Click "Convert to ICS" to generate and download the ICS file
-
+- Access it online at: [https://stirlo.github.io/txt_to_ICS_Prayer_Times/](https://stirlo.github.io/txt_to_ICS_Prayer_Times/)
+Visit [https://stirlo.github.io/txt_to_ICS_Prayer_Times/](https://stirlo.github.io/txt_to_ICS_Prayer_Times/) in your browser, upload text files using the file input, and click “Convert to ICS” to generate the ICS file.
 
 ## Usage
 
 ### Bash Script
 
-1. Make the script executable: `chmod +x create_ics.sh`
-2. Run: `./create_ics.sh 202409.txt 202410.txt 202411.txt`
+- Make the script executable: `chmod +x create_ics.sh`
+- Run: `./create_ics.sh 202409.txt 202410.txt 202411.txt`
 
 ### PowerShell Script
 
@@ -67,8 +44,8 @@ Run: `python create_ics.py 202409.txt 202410.txt 202411.txt`
 
 ### Web-based Converter
 
-1. Open `index.html` in a web browser
-2. Upload text files and click "Convert to ICS"
+- Open `index.html` in a web browser
+- Upload text files and click “Convert to ICS”
 
 ## Input File Format
 
@@ -84,19 +61,17 @@ Run: `python create_ics.py 202409.txt 202410.txt 202411.txt`
 
 ## Importing to Calendar Applications
 
-Most calendar applications (Google Calendar, Apple Calendar, Microsoft Outlook, etc.) can import ICS files. Refer to your calendar application's documentation for specific instructions on importing ICS files.
+Most calendar apps (Google Calendar, Apple Calendar, Microsoft Outlook, etc.) can import ICS files. Refer to your app’s documentation for specific instructions.
 
 ## Customization
 
-You can modify the scripts to adjust:
-
-- The duration of prayer events (currently set to 15 minutes)
-- The naming of prayer times
-- The format of the input files
+- Adjust the duration of prayer events (currently 15 minutes)
+- Name prayer times
+- Change the input file format
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check [issues page](https://github.com/stirlo/txt_to_ICS_Prayer_Times/issues) if you want to contribute.
+Issues, feature requests, and contributions are welcome. Check [issues page](https://github.com/stirlo/txt_to_ICS_Prayer_Times/issues) to contribute.
 
 ## License
 
