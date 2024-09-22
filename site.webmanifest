@@ -1,0 +1,19 @@
+{
+    "name": "Plaintext to ICS Converter",
+    "short_name": "TXT to ICS",
+    "icons": [
+        {
+            "src": "alarm-clock.svg",
+            "sizes": "192x192",
+            "type": "image/svg+xml"
+        },
+        {
+            "src": "alarm-clock.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml"
+        }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}
