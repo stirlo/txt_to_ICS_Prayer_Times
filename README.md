@@ -37,6 +37,13 @@ This project provides tools to convert plaintext prayer time data into iCalendar
 
 - Located in `index.html`, `styles.css`, and related files
 - Runs in web browsers, no server-side processing required
+- Accessible online at: [https://stirlo.github.io/txt_to_ICS_Prayer_Times/](https://stirlo.github.io/txt_to_ICS_Prayer_Times/)
+
+To use the web-based converter:
+1. Visit [https://stirlo.github.io/txt_to_ICS_Prayer_Times/](https://stirlo.github.io/txt_to_ICS_Prayer_Times/) in your web browser
+2. Upload text files using the file input
+3. Click "Convert to ICS" to generate and download the ICS file
+
 
 ## Usage
 
